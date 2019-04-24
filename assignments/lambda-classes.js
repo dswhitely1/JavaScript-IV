@@ -24,6 +24,13 @@ class Instructor extends Person {
 	grade(student, subject) {
 		return `${student.name} receives a perfect score on ${subject}.`;
 	}
+	grade_project(student) {
+		if (Math.ceil(Math.random() * 100) > 50) {
+			return (student.grade += Math.ceil(Math.random() * 5));
+		} else {
+			return (student.grade -= Math.ceil(Math.random() * 5));
+		}
+	}
 }
 
 class Student extends Person {
@@ -32,6 +39,7 @@ class Student extends Person {
 		this.previousBackground = studentAttrs.previousBackground;
 		this.className = studentAttrs.className;
 		this.favSubjects = studentAttrs.favSubjects;
+		this.grade = studentAttrs.grade;
 	}
 	listsSubjects() {
 		let favorite = this.favSubjects.map((subjects, i) => {
@@ -45,6 +53,12 @@ class Student extends Person {
 	}
 	sprintChallenge(subject) {
 		return `${this.name} has begun sprint challenge on ${subject}.`;
+	}
+	graduate() {
+		if (this.grade >= 70) {
+			return `Congratualtions, you are ready to graduate.`;
+		}
+		return `You still need some more learning young padawan.`;
 	}
 }
 
@@ -73,7 +87,7 @@ const fred = new Instructor({
 	catchPhrase : `Don't forget the homies`,
 });
 
-console.log(fred);
+console.table(fred);
 
 const wilma = new ProjectManager({
 	name          : 'Wilma',
@@ -94,14 +108,21 @@ const pebbles = new Student({
 	previousBackground : 'Vue.JS',
 	className          : 'WEBPT7',
 	favSubjects        : [ 'HTML', 'CSS', 'JavaScript' ],
+	grade              : Math.ceil(Math.random() * 100),
 });
 
-console.log(wilma);
+console.table(wilma);
 
-console.log(pebbles);
+console.table(pebbles);
 
 console.log(pebbles.listsSubjects());
 
 console.log(wilma.debugsCode(pebbles, 'Applied JavaScript'));
 
 console.log(wilma.standUp('WEBPT7-Wilma'));
+
+console.log(pebbles.grade);
+
+console.log(pebbles.graduate());
+
+console.log(fred.grade_project(pebbles));
